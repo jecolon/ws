@@ -1,12 +1,16 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
 )
 
+var port = flag.String("port", ":8080", "TCP port to listen on.")
+
 func main() {
-	fmt.Println("ws serving current directory on port 8080. Press CTRL+C to stop.")
-	log.Fatal(http.ListenAndServe(":8080", http.FileServer(http.Dir("."))))
+	flag.Parse()
+	fmt.Printf("ws serving current directory on port %s. Press CTRL+C to stop.\n", *port)
+	log.Fatal(http.ListenAndServe(*port, http.FileServer(http.Dir("."))))
 }
